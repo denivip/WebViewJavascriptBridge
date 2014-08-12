@@ -342,13 +342,6 @@ static bool logging = false;
     
     _numRequestsLoading--;
     
-    if (_numRequestsLoading == 0 && ![[webView stringByEvaluatingJavaScriptFromString:@"typeof WebViewJavascriptBridge == 'object'"] isEqualToString:@"true"]) {
-        NSBundle *bundle = _resourceBundle ? _resourceBundle : [NSBundle mainBundle];
-        NSString *filePath = [bundle pathForResource:@"WebViewJavascriptBridge.js" ofType:@"txt"];
-        NSString *js = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-        [webView stringByEvaluatingJavaScriptFromString:js];
-    }
-    
     if (_startupMessageQueue) {
         for (id queuedMessage in _startupMessageQueue) {
             [self _dispatchMessage:queuedMessage];
